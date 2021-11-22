@@ -14,11 +14,18 @@ CLOSE_CONTENTS -> CONTENTS kurungtutup
 LOGICAL_OPERATION -> CONTENTS | CONTENTS logicalop CONTENTS | True | False | LOGICAL_OPERATION and LOGICAL_OPERATION | LOGICAL_OPERATION or LOGICAL_OPERATION | kurungbuka CLOSE_LOGICAL_OPERATION | not LOGICAL_OPERATION
 CLOSE_LOGICAL_OPERATION -> LOGICAL_OPERATION kurungtutup
 
+# Return Expression
+ALGORITMA -> RETURN_EXPRESSION
+RETURN_EXPRESSION -> return MULTIPLE_VARIABLE
+
 #import expression
 ALGORITMA -> IMPORT_EXPRESSION
 IMPORT_EXPRESSION -> import MULTIPLE_VARIABLE | from variabel import MULTIPLE_VARIABLE | import variabel as variabel | from variabel import variabel as variabel
 MULTIPLE_VARIABLE -> variabel COMMA_VARIABLE | variabel | konstan COMMA_VARIABLE | konstan | CONTENTS COMMA_VARIABLE | CONTENTS | variabel colon variabel
 COMMA_VARIABLE -> comma variabel | comma konstan | comma CONTENTS | COMMA_VARIABLE COMMA_VARIABLE
+
+# Pass Expression
+ALGORITMA -> pass
 
 #Syntax untuk fungsi dan prosedur
 ALGORITHM -> FUNCTION_EXPRESSION
@@ -36,6 +43,9 @@ IF_EXPRESSION -> if kurungbuka LOGICAL_OPERATION kurungtutup colon barisbaru ALG
 ELIF_EXPRESSION -> ELIF_EXPRESSION ELIF_EXPRESSION | elif kurungbuka LOGICAL_OPERATION kurungtutup colon barisbaru ALGORITMA | elif LOGICAL_OPERATION colon barisbaru ALGORITHM
 ELSE_EXPRESSION -> else colon barisbaru ALGORITMA
 
+# Raise Expression
+ALGORITMA -> RAISE_EXPRESSION
+RAISE_EXPRESSION -> raise CALL_FUNCTION
 
 # Perulangan For
 ALGORITMA -> FOR_EXPRESSION
@@ -47,17 +57,6 @@ RANGE -> konstan | konstan comma konstan | konstan comma konstan comma konstan |
 ALGORITMA -> CLASS_EXPRESSION
 CLASS_EXPRESSION -> class variabel colon barisbaru ALGORITMA
 
-# Raise
-ALGORITMA -> RAISE_EXPRESSION
-RAISE_EXPRESSION -> raise CALL_FUNCTION
-
-# Return Expression
-ALGORITMA -> RETURN_EXPRESSION
-RETURN_EXPRESSION -> return MULTIPLE_VARIABLE
-
-# Pass Expression
-ALGORITMA -> pass
-
-# With
+# With Expression
 ALGORITMA -> WITH_EXPRESSION
 WITH_EXPRESSION -> with CALL_FUNCTION as variabel colon barisbaru ALGORITMA
