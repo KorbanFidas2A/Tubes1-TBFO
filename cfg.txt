@@ -3,7 +3,7 @@
 S -> ALGORITMA
 ALGORITMA -> ALGORITMA ALGORITMA
 ALGORITMA -> barisbaru
-ALGORITMA -> variabel equal CONTENTS | variabel equal FUNCTIONS
+ALGORITMA -> variabel equal CONTENTS | variabel equal CALL_FUNCTION
 
 
 #contents dari variabel
@@ -14,24 +14,50 @@ CLOSE_CONTENTS -> CONTENTS kurungtutup
 LOGICAL_OPERATION -> CONTENTS | CONTENTS logicalop CONTENTS | True | False | LOGICAL_OPERATION and LOGICAL_OPERATION | LOGICAL_OPERATION or LOGICAL_OPERATION | kurungbuka CLOSE_LOGICAL_OPERATION | not LOGICAL_OPERATION
 CLOSE_LOGICAL_OPERATION -> LOGICAL_OPERATION kurungtutup
 
-#import statement 
-ALGORITMA -> IMPORT_STATEMENT
-IMPORT_STATEMENT -> import MULTIPLE_VARIABLE | from variabel import MULTIPLE_VARIABLE | import variabel as variabel | from variabel import variabel as variabel
+#import expression
+ALGORITMA -> IMPORT_EXPRESSION
+IMPORT_EXPRESSION -> import MULTIPLE_VARIABLE | from variabel import MULTIPLE_VARIABLE | import variabel as variabel | from variabel import variabel as variabel
 MULTIPLE_VARIABLE -> variabel COMMA_VARIABLE | variabel | konstan COMMA_VARIABLE | konstan | CONTENTS COMMA_VARIABLE | CONTENTS | variabel colon variabel
 COMMA_VARIABLE -> comma variabel | comma konstan | comma CONTENTS | COMMA_VARIABLE COMMA_VARIABLE
 
 #Syntax untuk fungsi dan prosedur
-ALGORITHM -> FUNCTION_STATEMENT
-FUNCTION_STATEMENT -> def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru ALGORITMA return MULTIPLE_VARIABLE | def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru ALGORITMA | def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru return MULTIPLE_VARIABLE | def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru return ALGORITMA | def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru ALGORITMA return ALGORITMA | def variabel kurungbuka kurungtutup colon barisbaru ALGORITMA return MULTIPLE_VARIABLE | def variabel kurungbuka kurungtutup colon barisbaru ALGORITMA | def variabel kurungbuka kurungtutup colon barisbaru return MULTIPLE_VARIABLE | def variabel kurungbuka kurungtutup colon barisbaru return ALGORITMA | def variabel kurungbuka kurungtutup colon barisbaru ALGORITMA return ALGORITMA
+ALGORITHM -> FUNCTION_EXPRESSION
+FUNCTION_EXPRESSION -> def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru ALGORITMA return MULTIPLE_VARIABLE | def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru ALGORITMA | def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru return MULTIPLE_VARIABLE | def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru return ALGORITMA | def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru ALGORITMA return ALGORITMA | def variabel kurungbuka kurungtutup colon barisbaru ALGORITMA return MULTIPLE_VARIABLE | def variabel kurungbuka kurungtutup colon barisbaru ALGORITMA | def variabel kurungbuka kurungtutup colon barisbaru return MULTIPLE_VARIABLE | def variabel kurungbuka kurungtutup colon barisbaru return ALGORITMA | def variabel kurungbuka kurungtutup colon barisbaru ALGORITMA return ALGORITMA
 ALGORITMA -> CALL_FUNCTION
 CALL_FUNCTION -> variabel kurungbuka MULTIPLE_VARIABLE kurungtutup | variabel kurangbuka kurungtutup
 
 # Perulangan While
-ALGORITMA -> WHILE_STATEMENT
-WHILE_STATEMENT -> while kurungbuka LOGICAL_OPERATION kurungtutup colon barisbaru ALGORITMA
+ALGORITMA -> WHILE_EXPRESSION
+WHILE_EXPRESSION -> while kurungbuka LOGICAL_OPERATION kurungtutup colon barisbaru ALGORITMA
 
 # Percabangan untuk if else
 ALGORITMA -> IF_EXPRESSION | return MULTIPLE_VARIABLE
 IF_EXPRESSION -> if kurungbuka LOGICAL_OPERATION kurungtutup colon barisbaru ALGORITMA | if LOGICAL_OPERATION colon barisbaru ALGORITMA | IF_EXPRESSION ELIF_EXPRESSION | IF_EXPRESSION ELIF_EXPRESSION ELSE_EXPRESSION | IF_EXPRESSION ELSE_EXPRESSION
 ELIF_EXPRESSION -> ELIF_EXPRESSION ELIF_EXPRESSION | elif kurungbuka LOGICAL_OPERATION kurungtutup colon barisbaru ALGORITMA | elif LOGICAL_OPERATION colon barisbaru ALGORITHM
 ELSE_EXPRESSION -> else colon barisbaru ALGORITMA
+
+
+# Perulangan For
+ALGORITMA -> FOR_EXPRESSION
+FOR_EXPRESSION -> for variabel in range kurungbuka RANGE kurungtutup colon barisbaru ALGORITMA | for variabel in variabel colon barisbaru ALGORITMA
+RANGE -> konstan | konstan comma konstan | konstan comma konstan comma konstan | variabel | CONTENTS
+
+
+# Syntax Class
+ALGORITMA -> CLASS_EXPRESSION
+CLASS_EXPRESSION -> class variabel colon barisbaru ALGORITMA
+
+# Raise
+ALGORITMA -> RAISE_EXPRESSION
+RAISE_EXPRESSION -> raise CALL_FUNCTION
+
+# Return Expression
+ALGORITMA -> RETURN_EXPRESSION
+RETURN_EXPRESSION -> return MULTIPLE_VARIABLE
+
+# Pass Expression
+ALGORITMA -> pass
+
+# With
+ALGORITMA -> WITH_EXPRESSION
+WITH_EXPRESSION -> with CALL_FUNCTION as variabel colon barisbaru ALGORITMA
