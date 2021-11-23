@@ -184,7 +184,7 @@ with open("python.txt", "r", encoding="utf8") as py_file:
                 elif ((getChar(word, i) == "/") and (getChar(word, i + 1) == "/")) or ((getChar(word, i) == "*") and (getChar(word, i + 1) == "*")):
                     token.append("opr_mat")
                     i += 1
-                elif (getChar(word, i) == "\'"):
+                elif (getChar(word, i) == "\\"):
                     while (i < len(word)) and (valid):
                         if (i == len(word)):
                             word = nextWord(line, idx_word)
