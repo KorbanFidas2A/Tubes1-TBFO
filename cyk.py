@@ -1,9 +1,10 @@
 
+from re import A
 import time
 
 def index_of(array, string, length):
     """ 
-    Bubble search
+    Binary search
     """
     
     left_index = 0
@@ -28,36 +29,38 @@ def index_of(array, string, length):
 start = time.time();
 
 # INISIALISASI SEMUA ARRAY
+# S -> AB
+# A -> 
+# B -> 
 array_production = [["~" for _ in range(3)] for _ in range(1005)]
-P = [[[False for _ in range(525)] for _ in range(525)] for _ in range(525)]
-array_token = ["" for _ in range(1005)]
 v = []
-kiri = [0 for _ in range(1005)]
-kanan = [0 for _ in range(1005)]
+kiri = [0 for _ in range(300)]
+kanan = [0 for _ in range(300)]
 
 # BACA TOKEN
-
+array_token = []
 with open("token.txt", "r") as token_file:
     tokens = token_file.read().split()
 
     i = 0
     for token in tokens:
-        array_token[i] = token
+        array_token.append(token)
         i += 1
         
     token_quantity = i
 
 print(f"Jumlah token: {token_quantity}")
 
+
 # BACA CNF
 
-with open("cnf2.txt", "r") as cnf_file:
+with open("cnf.txt", "r") as cnf_file:
     productions = cnf_file.readlines()
 
     i = 0
     for production in productions:
         production = production.split()
-
+        # S -> A B | C
         left_side = production.pop(0)
         arrow = production.pop(0)
 
@@ -75,6 +78,7 @@ with open("cnf2.txt", "r") as cnf_file:
                 left_variable = False
         i += 1
     production_quantity = i
+    
 
 for i in range(production_quantity):
     if array_production[i][0] == "newline":
@@ -268,12 +272,12 @@ for i in range(production_quantity):
 
 array_production = sorted(array_production,key=lambda x: x[0])
 # DEBUGGING SORTING ARRAY
-# for i in range(production_quantity):
-#     print(i, array_production[i][0], "->", array_production[i][1], end=" ")
-#     if (array_production[i][2] != "~"):
-#         print(array_production[i][2])
-#     else:
-#         print()
+for i in range(production_quantity):
+    print(i, array_production[i][0], "->", array_production[i][1], end=" ")
+    if (array_production[i][2] != "~"):
+        print(array_production[i][2])
+    else:
+        print()
 
 
 for i in range(production_quantity):
@@ -288,21 +292,31 @@ for i in range(production_quantity):
     else:
         kanan[index_of(v, array_production[i][0], len(v))] = i
 
-print(v)
-print("="*100)  
-print(kiri)
-print("="*100)
-print(kanan)
+# print(v)
+# print("="*100)  
+# print(kiri)
+# print("="*100)
+# print(kanan)
 
 # DEBUGGING
 # for i in range(len(v)):
 #     print(i, v[i], kiri[index_of(v, v[i], len(v) - 1)], kanan[index_of(v, v[i], len(v) - 1)])
 
+P = [[[False for _ in range(production_quantity)] for _ in range(token_quantity)] for _ in range(token_quantity)]
+
+# INISIALISASI BARIS PERTAMA MENJADI TRUE
+a = 0
 
 for i in range(token_quantity):
     for j in range(production_quantity):
         if array_production[j][1] == array_token[i]:
-            P[1][i][j] = True;
+            print(array_production[j][1], array_token[i])
+            P[1][i][j] = True
+            a += 1
+            
+print("token quantitiy", token_quantity)
+print("production quantity", production_quantity)
+print(f"masuk {a} kali")
 
 for i in range(1, token_quantity):
     print(i, time.time() - start)
@@ -318,11 +332,10 @@ for i in range(1, token_quantity):
                             if P[k][j][m] and P[i-k][j+k][n]:
                                 P[i][j][l] = True
 
-
 is_acc = False
 i = 0
 while i < production_quantity and not is_acc:
-    if array_production[i][0] == "S0" and P[token_quantity][1][i]:
+    if array_production[i][0] == "S0" and P[token_quantity - 1][1][i]:
         is_acc = True
     else:
         i += 1
@@ -333,4 +346,4 @@ else:
     print("Syntax Error")
     
 end = time.time()
-print(start - end)
+print(end-start)
