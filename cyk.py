@@ -91,9 +91,9 @@ for i in range(production_quantity):
         array_production[i][0] = "i"
     elif array_production[i][0] == "return":
         array_production[i][0] = "r"
-    elif array_production[i][0] == "openparantheses":
+    elif array_production[i][0] == "openparentheses":
         array_production[i][0] = "o"
-    elif array_production[i][0] == "closeparantheses":
+    elif array_production[i][0] == "closeparentheses":
         array_production[i][0] = "c"
     elif array_production[i][0] == "colon":
         array_production[i][0] = "co"
@@ -154,9 +154,9 @@ for i in range(production_quantity):
         array_production[i][1] = "i"
     elif array_production[i][1] == "return":
         array_production[i][1] = "r"
-    elif array_production[i][1] == "openparantheses":
+    elif array_production[i][1] == "openparentheses":
         array_production[i][1] = "o"
-    elif array_production[i][1] == "closeparantheses":
+    elif array_production[i][1] == "closeparentheses":
         array_production[i][1] = "c"
     elif array_production[i][1] == "colon":
         array_production[i][1] = "co"
@@ -217,9 +217,9 @@ for i in range(production_quantity):
         array_production[i][2] = "i"
     elif array_production[i][2] == "return":
         array_production[i][2] = "r"
-    elif array_production[i][2] == "openparantheses":
+    elif array_production[i][2] == "openparentheses":
         array_production[i][2] = "o"
-    elif array_production[i][2] == "closeparantheses":
+    elif array_production[i][2] == "closeparentheses":
         array_production[i][2] = "c"
     elif array_production[i][2] == "colon":
         array_production[i][2] = "co"
@@ -272,12 +272,12 @@ for i in range(production_quantity):
 
 array_production = sorted(array_production,key=lambda x: x[0])
 # DEBUGGING SORTING ARRAY
-for i in range(production_quantity):
-    print(i, array_production[i][0], "->", array_production[i][1], end=" ")
-    if (array_production[i][2] != "~"):
-        print(array_production[i][2])
-    else:
-        print()
+# for i in range(production_quantity):
+#     print(i, array_production[i][0], "->", array_production[i][1], end=" ")
+#     if (array_production[i][2] != "~"):
+#         print(array_production[i][2])
+#     else:
+#         print()
 
 
 for i in range(production_quantity):
@@ -290,7 +290,7 @@ for i in range(production_quantity):
         kiri[index_of(v, array_production[i][0], len(v) - 1)] = i
         kanan[index_of(v, array_production[i][0], len(v) - 1)] = i
     else:
-        kanan[index_of(v, array_production[i][0], len(v))] = i
+        kanan[index_of(v, array_production[i][0], len(v) - 1)] = i
 
 # print(v)
 # print("="*100)  
@@ -302,22 +302,30 @@ for i in range(production_quantity):
 # for i in range(len(v)):
 #     print(i, v[i], kiri[index_of(v, v[i], len(v) - 1)], kanan[index_of(v, v[i], len(v) - 1)])
 
-P = [[[False for _ in range(production_quantity)] for _ in range(token_quantity)] for _ in range(token_quantity)]
-
+P = [[[False for _ in range(550)] for _ in range(550)] for _ in range(550)]
+print("ap:", array_production[13][1], "token:", array_token[1])
 # INISIALISASI BARIS PERTAMA MENJADI TRUE
 a = 0
-
 for i in range(token_quantity):
     for j in range(production_quantity):
         if array_production[j][1] == array_token[i]:
-            print(array_production[j][1], array_token[i])
-            P[1][i][j] = True
+            P[0][i][j] = True
             a += 1
-            
-print("token quantitiy", token_quantity)
-print("production quantity", production_quantity)
+            if P[0][1][13] == 1:
+                print(array_production[j][1], array_token[i])
+
+print("setelah diubah")
+for i in range(1):
+    for j in range(6):
+        for k in range(15):
+            print(P[i][j][k], end=" ")
+        print()
+    print()
+ 
 print(f"masuk {a} kali")
 
+a= 0
+print(P[0][2][230], P[0][3][230], array_production[231][0], array_production[32][1], array_production[230][0], array_production[32][2])
 for i in range(1, token_quantity):
     print(i, time.time() - start)
     for j in range(token_quantity - i):
@@ -325,17 +333,28 @@ for i in range(1, token_quantity):
             # Test combination
             for l in range(production_quantity):
                 b_location = index_of(v, array_production[l][1], len(v) - 1)
-                for m in range(kiri[b_location], kanan[b_location]):
+                print(f"({kiri[b_location]},{kanan[b_location]})", end=" ")
+                for m in range(kiri[b_location], kanan[b_location] + 1):
+                    a += 1
                     c_location = index_of(v, array_production[l][2], len(v) - 1)
-                    for n in range(kiri[c_location], kanan[c_location]):
+                    for n in range(kiri[c_location], kanan[c_location] + 1):
                         if array_production[m][0] == array_production[l][1] and array_production[n][0] == array_production[l][2]:
-                            if P[k][j][m] and P[i-k][j+k][n]:
+                            # if P[k][j][m]:
+                            #     print(f"P[{k}][{j}][{m}] true")
+                            # if P[i-k][j+k + 1][n]:
+                            #     print(f"P[{i-k}][{j+k + 1}][{n}] true")
+                            
+                            if P[k][j][m] and P[i-k][j+k + 1][n]:
                                 P[i][j][l] = True
+                                print("i:", i, "j:", j, "k:" , k, "l:", l, "m:", m, "n:",n)
+
+print(f"masuk m: {a}")
 
 is_acc = False
 i = 0
 while i < production_quantity and not is_acc:
-    if array_production[i][0] == "S0" and P[token_quantity - 1][1][i]:
+    b = i
+    if array_production[i][0] == "S0" and P[token_quantity - 1][1][b]:
         is_acc = True
     else:
         i += 1
