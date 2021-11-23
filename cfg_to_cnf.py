@@ -10,7 +10,7 @@ bacagrammar = file.readlines()
 for i in range(len(bacagrammar)):
     bacagrammar[i] = bacagrammar[i].replace('\n', '')
 
-#prod_res berarti adalah array untuk menampung hasil produksi
+#prod_res berarti adalah array untuk menampung hasil produksi, [Kiri] -> [Kanan] sudah dipisahkan
 prod_res = []
 for i in range(len(bacagrammar)):
     if (bacagrammar[i][0] == '#'):
@@ -22,20 +22,21 @@ for i in range(len(bacagrammar)):
     for j in range(len(right_side)):
         Terms = right_side[j].split(' ')
         for term in Terms:
-            if (term >= 'a' and term <= 'z' and term not in terminal):
-                terminal.append(term)
+            if (term >= 'a' and term <= 'z'):
+                if(term not in terminal):
+                    terminal.append(term)
         prod_res.append((left_side, Terms))
 
-#Untuk memulai, mengeliminasi dari yang kanan
+#Untuk menambahkan Sn kedalam variabel, untuk memulai Unit Production Elimination
 if (not 'Sn' in variabel):
     variabel.append('Sn')
     prod_res = [('Sn', [variabel[0]])] + prod_res
-# Membuat dictionary untuk terminal dan variabel
-#Untuk mengeliminasi aturan yang memiliki Format U -> Xa diganti menjadi 2 variabel, U -> XY kemudian Y->a)
+
+#Membuat dictionary untuk terminal dan variabel
+#Seperti Hash Table, untuk mengakses seluruh variabel yang memiliki terminal tunggal di sebelah kanan
+#contoh: Y -> a , ALGORITMA -> baris baru
 dict = {}
 
-#Untuk mengecek adanya duplikasi
-#Misalnya apakah ada A->a yang sudah ada sebelumnya
 for product in prod_res:
     if ((product[0] in variabel) and (product[1][0] in terminal) and (len(product[1]) == 1)):
         dict[product[1][0]] = product[0]
@@ -52,16 +53,20 @@ def create_new_var():
         variabel_baru = var.upper() + str(i)
     return variabel_baru
 
-
 #List untuk menyimpan hasil produksi (prod_res)
+#product[0] menyatakan bagian kiri, product[1] menyatakan bagian kanan, [kiri] -> [kanan]
 for product in prod_res:
+    #ini untuk memitigasi adanya yang hanya terminal A -> [terminal]
     if ((product[0] in variabel) and (product[1][0] in terminal) and (len(product[1]) == 1)):
         prod_res2.append(product)
+        #misalnya ada A -> B a
     else:
         for Terminal in terminal:
             i = 0
-            for Term in product[1]:
+            for Term in product[1]: #mengecek di dalam A -> (A,B) product[1] menandakan A,B
+                #mencari apakah terminal terdapat pada bagian kiri sehingga misalnya A -> [terminal][variabel]
                 if ((Terminal == Term) and (not Terminal in dict)):
+                    #apabila ada maka, akan ditambahkan ke dalam dictionary. A -> a sebagai contoh.
                     dict[Terminal] = create_new_var()
                     variabel.append(dict[Terminal])
                     prod_res2.append((dict[Terminal], [Terminal]))
@@ -70,17 +75,20 @@ for product in prod_res:
                     product[1][i] = dict[Terminal]
                 i = i + 1
         prod_res2.append((product[0], product[1]))
+        
 prod_res = prod_res2
 
-#fungsi untuk mengeliminasi sebelah kanan (Sn -> [sebelah kanan]) yang memiliki terminal lebih dari 2
+#fungsi untuk mengeliminasi sebelah kanan (Sn -> [sebelah kanan]) yang memiliki variabel lebih dari 2
 prod_res2 = []
 for product in prod_res:
     if (len(product[1]) <= 2):
         prod_res2.append(product)
     else:
+        #misalnya ada lebih dari 2
         newvar = create_new_var()
         variabel.append(newvar)
         prod_res2.append((product[0],[product[1][0]] + [newvar]))
+        #membuat belakangnya itu jadi suatu variabel
         newvar2 = newvar
         newvar3 = create_new_var()
         for i in range(1, len(product[1]) - 2):
@@ -89,7 +97,9 @@ for product in prod_res:
             newvar2 = newvar3
             newvar3 = create_new_var()
         prod_res2.append((newvar2, product[1][len(product[1])-2:len(product[1])]))
+
 prod_res = prod_res2
+
 
 #Bagian untuk mengeliminasi unit production
 for i in range(500): 
