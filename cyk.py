@@ -1,3 +1,4 @@
+
 import time
 
 def index_of(array, string, length):
@@ -28,7 +29,7 @@ start = time.time();
 
 # INISIALISASI SEMUA ARRAY
 array_production = [["~" for _ in range(3)] for _ in range(1005)]
-P = [[[True for _ in range(505)] for _ in range(505)] for _ in range(505)]
+P = [[[False for _ in range(525)] for _ in range(525)] for _ in range(525)]
 array_token = ["" for _ in range(1005)]
 v = []
 kiri = [0 for _ in range(1005)]
@@ -50,7 +51,7 @@ print(f"Jumlah token: {token_quantity}")
 
 # BACA CNF
 
-with open("cnf.txt", "r") as cnf_file:
+with open("cnf2.txt", "r") as cnf_file:
     productions = cnf_file.readlines()
 
     i = 0
@@ -274,6 +275,7 @@ array_production = sorted(array_production,key=lambda x: x[0])
 #     else:
 #         print()
 
+
 for i in range(production_quantity):
     if v == []:
         v.append(array_production[i][0])
@@ -286,6 +288,12 @@ for i in range(production_quantity):
     else:
         kanan[index_of(v, array_production[i][0], len(v))] = i
 
+print(v)
+print("="*100)  
+print(kiri)
+print("="*100)
+print(kanan)
+
 # DEBUGGING
 # for i in range(len(v)):
 #     print(i, v[i], kiri[index_of(v, v[i], len(v) - 1)], kanan[index_of(v, v[i], len(v) - 1)])
@@ -295,3 +303,34 @@ for i in range(token_quantity):
     for j in range(production_quantity):
         if array_production[j][1] == array_token[i]:
             P[1][i][j] = True;
+
+for i in range(1, token_quantity):
+    print(i, time.time() - start)
+    for j in range(token_quantity - i):
+        for k in range(i):
+            # Test combination
+            for l in range(production_quantity):
+                b_location = index_of(v, array_production[l][1], len(v) - 1)
+                for m in range(kiri[b_location], kanan[b_location]):
+                    c_location = index_of(v, array_production[l][2], len(v) - 1)
+                    for n in range(kiri[c_location], kanan[c_location]):
+                        if array_production[m][0] == array_production[l][1] and array_production[n][0] == array_production[l][2]:
+                            if P[k][j][m] and P[i-k][j+k][n]:
+                                P[i][j][l] = True
+
+
+is_acc = False
+i = 0
+while i < production_quantity and not is_acc:
+    if array_production[i][0] == "S0" and P[token_quantity][1][i]:
+        is_acc = True
+    else:
+        i += 1
+
+if is_acc:
+    print("Accepted")
+else:
+    print("Syntax Error")
+    
+end = time.time()
+print(start - end)
