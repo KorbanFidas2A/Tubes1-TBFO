@@ -75,11 +75,8 @@ for product in prod_res:
                     product[1][i] = dict[Terminal]
                 i = i + 1
         prod_res2.append((product[0], product[1]))
-        #print(prod_res2)
-        #print()
+        
 prod_res = prod_res2
-#print()
-#print(dict)
 
 #fungsi untuk mengeliminasi sebelah kanan (Sn -> [sebelah kanan]) yang memiliki variabel lebih dari 2
 prod_res2 = []
@@ -88,28 +85,23 @@ for product in prod_res:
         prod_res2.append(product)
     else:
         #misalnya ada lebih dari 2
-        print(product)
         newvar = create_new_var()
         variabel.append(newvar)
         prod_res2.append((product[0],[product[1][0]] + [newvar]))
-        print((product[0],[product[1][0]] + [newvar]))
         #membuat belakangnya itu jadi suatu variabel
         newvar2 = newvar
         newvar3 = create_new_var()
         for i in range(1, len(product[1]) - 2):
             variabel.append(newvar3)
             prod_res2.append((newvar2, [product[1][i], newvar3]))
-            print((newvar2, [product[1][i], newvar3]))
             newvar2 = newvar3
             newvar3 = create_new_var()
         prod_res2.append((newvar2, product[1][len(product[1])-2:len(product[1])]))
-        #print((newvar2, product[1][len(product[1])-2:len(product[1])]))
-        print()
+
 prod_res = prod_res2
 
 
 #Bagian untuk mengeliminasi unit production
-print(prod_res)
 for i in range(500): 
     prod_res2 = []
     elim_unit = []
