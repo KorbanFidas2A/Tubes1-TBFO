@@ -68,9 +68,9 @@ with open("cnf.txt", "r") as cnf_file:
 print("Checking...")
 for i in range(1, production_quantity + 1):
     for j in range(3):
-        if array_production[i][j] == "newline":
+        if array_production[i][j] == "barisbaru":
             array_production[i][j] = "n"
-        elif array_production[i][j] == "variable":
+        elif array_production[i][j] == "variabel":
             array_production[i][j] = "v"
         elif array_production[i][j] == "equal":
             array_production[i][j] = "e"
@@ -78,9 +78,9 @@ for i in range(1, production_quantity + 1):
             array_production[i][j] = "i"
         elif array_production[i][j] == "return":
             array_production[i][j] = "r"
-        elif array_production[i][j] == "openparentheses":
+        elif array_production[i][j] == "kurungbuka":
             array_production[i][j] = "o"
-        elif array_production[i][j] == "closeparentheses":
+        elif array_production[i][j] == "kurungtutup":
             array_production[i][j] = "c"
         elif array_production[i][j] == "colon":
             array_production[i][j] = "co"
@@ -88,11 +88,11 @@ for i in range(1, production_quantity + 1):
             array_production[i][j] = "e"
         elif array_production[i][j] == "else":
             array_production[i][j] = "el"
-        elif array_production[i][j] == "true":
+        elif array_production[i][j] == "True":
             array_production[i][j] = "t"
-        elif array_production[i][j] == "false":
+        elif array_production[i][j] == "False":
             array_production[i][j] = "f"
-        elif array_production[i][j] == "constant":
+        elif array_production[i][j] == "konstan":
             array_production[i][j] = "con"
         elif array_production[i][j] == "arithmeticop":
             array_production[i][j] = "a"
@@ -175,7 +175,7 @@ for i in range(2, token_quantity + 1):
 is_acc = False
 i = 1
 while i <= production_quantity and not is_acc:
-    if array_production[i][0] == "S0" and P[token_quantity][1][i]:
+    if array_production[i][0] == "Sn" and P[token_quantity][1][i]:
         is_acc = True
     else:
         i += 1
