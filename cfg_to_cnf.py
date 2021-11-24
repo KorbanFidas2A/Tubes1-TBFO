@@ -20,7 +20,6 @@ def add_terminal(dictionary, hasilprod, var, terms):
         if ((product[0] in var) and (product[1][0] in terms) and (len(product[1]) == 1)):
             dictionary[product[1][0]] = product[0]
 
-
 def pecah_array(bacagrammar, var, hasilprod, terms):
     """
     Memisahkan array di sebelah kiri dan kanan
