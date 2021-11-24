@@ -32,6 +32,15 @@ def pecah_array(bacagrammar, var, hasilprod, terms):
                         terms.append(term)
             hasilprod.append((left_side, Terms))
 
+def addSn(var, hasilprod):
+    """
+    menambahkan Sn -> S
+    """
+    if (not 'Sn' in var):
+        var.append('Sn')
+        hasilprod = [('Sn', [var[0]])] + hasilprod
+    return hasilprod
+
 def add_terminal(dictionary, hasilprod, var, terms):
     """
     Membuat hash table untuk mengakses terminal menggunakan dictionary
@@ -160,42 +169,3 @@ def write_to_cnf(hasilprod):
                     file.write(product[1][0])
                 else:
                     file.write(product[1][0] + ' ' + product[1][1])
-
-#MAIN PROGRAM
-
-variabel = []
-array_cfg = []
-
-#mengubah CFG menjadi array
-array_cfg = baca_grammar()
-
-#Memisahkan array di sebelah kiri dan kanan
-prod_res = []
-terminal = []
-pecah_array(array_cfg, variabel, prod_res, terminal)
-
-#menambahkan Sn -> S
-if (not 'Sn' in variabel):
-    variabel.append('Sn')
-    prod_res = [('Sn', [variabel[0]])] + prod_res
-
-dict = {}
-add_terminal(dict, prod_res, variabel, terminal)
-
-#mengganti terminal menjadi variabel
-prod_res2 = []
-prod_res = change_var(prod_res, prod_res2, variabel, terminal, dict)
-
-#untuk mengeliminasi variabel menjadi 2 variabel, maksimum
-prod_res2 = []
-prod_res = eliminate_two_var(prod_res, prod_res2, variabel)
-
-#melakukan unit production elimination
-prod_res = unit_production_elim(prod_res, variabel)
-
-#menulis hasil terjemahan CFG ke CNF dalam txt
-write_to_cnf(prod_res)
-
-
-#Note: tidak ada eliminasi menggunakan epsilon
-#Pada grammar CFG tidak digunakan epsilon
