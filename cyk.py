@@ -197,7 +197,7 @@ def cyk_algorithm(variable_array, production_array, production_quantity, token_a
     return table                  
 
 
-def final_check(production_array, production_quantity, token_quantity, P):
+def final_check(production_array, production_quantity, token_quantity, table):
     """
     Prosedur menampilkan pesan diterima jika syntax kode sesuai dengan
     grammar pada CFG dan menampilkan pesan lain jika tidak diterima.
@@ -206,7 +206,7 @@ def final_check(production_array, production_quantity, token_quantity, P):
     is_acc = False
     i = 1
     while i <= production_quantity and not is_acc:
-        if production_array[i][0] == "Sn" and P[token_quantity][1][i]:
+        if production_array[i][0] == "Sn" and table[token_quantity][1][i]:
             is_acc = True
         else:
             i += 1
