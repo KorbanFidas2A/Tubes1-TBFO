@@ -292,6 +292,28 @@ for i in range(production_quantity):
     else:
         kanan[index_of(v, array_production[i][0], len(v) - 1)] = i
 
+array_production = sorted(array_production,key=lambda x: x[0])
+# DEBUGGING SORTING ARRAY
+# for i in range(production_quantity):
+#     print(i, array_production[i][0], "->", array_production[i][1], end=" ")
+#     if (array_production[i][2] != "~"):
+#         print(array_production[i][2])
+#     else:
+#         print()
+
+
+for i in range(production_quantity):
+    if v == []:
+        v.append(array_production[i][0])
+        kiri[0] = 1
+        kanan[0] = 1
+    elif array_production[i][0] != array_production[i-1][0]:
+        v.append(array_production[i][0])
+        kiri[index_of(v, array_production[i][0], len(v) - 1)] = i
+        kanan[index_of(v, array_production[i][0], len(v) - 1)] = i
+    else:
+        kanan[index_of(v, array_production[i][0], len(v) - 1)] = i
+
 # print(v)
 # print("="*100)  
 # print(kiri)
