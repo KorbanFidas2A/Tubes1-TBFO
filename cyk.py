@@ -81,9 +81,9 @@ with open("cnf.txt", "r") as cnf_file:
     
 
 for i in range(production_quantity):
-    if array_production[i][0] == "newline":
+    if array_production[i][0] == "barisbaru":
         array_production[i][0] = "n"
-    elif array_production[i][0] == "variable":
+    elif array_production[i][0] == "variabel":
         array_production[i][0] = "v"
     elif array_production[i][0] == "equal":
         array_production[i][0] = "e"
@@ -91,9 +91,9 @@ for i in range(production_quantity):
         array_production[i][0] = "i"
     elif array_production[i][0] == "return":
         array_production[i][0] = "r"
-    elif array_production[i][0] == "openparentheses":
+    elif array_production[i][0] == "kurungbuka":
         array_production[i][0] = "o"
-    elif array_production[i][0] == "closeparentheses":
+    elif array_production[i][0] == "kurungtutup":
         array_production[i][0] = "c"
     elif array_production[i][0] == "colon":
         array_production[i][0] = "co"
@@ -101,11 +101,11 @@ for i in range(production_quantity):
         array_production[i][0] = "e"
     elif array_production[i][0] == "else":
         array_production[i][0] = "el"
-    elif array_production[i][0] == "true":
+    elif array_production[i][0] == "True":
         array_production[i][0] = "t"
-    elif array_production[i][0] == "false":
+    elif array_production[i][0] == "False":
         array_production[i][0] = "f"
-    elif array_production[i][0] == "constant":
+    elif array_production[i][0] == "konstan":
         array_production[i][0] = "con"
     elif array_production[i][0] == "arithmeticop":
         array_production[i][0] = "a"
@@ -144,9 +144,9 @@ for i in range(production_quantity):
     elif array_production[i][0] == "with":
         array_production[i][0] = "wi"
            
-    if array_production[i][1] == "newline":
+    if array_production[i][1] == "barisbaru":
         array_production[i][1] = "n"
-    elif array_production[i][1] == "variable":
+    elif array_production[i][1] == "variabel":
         array_production[i][1] = "v"
     elif array_production[i][1] == "equal":
         array_production[i][1] = "e"
@@ -154,9 +154,9 @@ for i in range(production_quantity):
         array_production[i][1] = "i"
     elif array_production[i][1] == "return":
         array_production[i][1] = "r"
-    elif array_production[i][1] == "openparentheses":
+    elif array_production[i][1] == "kurungbuka":
         array_production[i][1] = "o"
-    elif array_production[i][1] == "closeparentheses":
+    elif array_production[i][1] == "kurungtutup":
         array_production[i][1] = "c"
     elif array_production[i][1] == "colon":
         array_production[i][1] = "co"
@@ -164,11 +164,11 @@ for i in range(production_quantity):
         array_production[i][1] = "e"
     elif array_production[i][1] == "else":
         array_production[i][1] = "el"
-    elif array_production[i][1] == "true":
+    elif array_production[i][1] == "True":
         array_production[i][1] = "t"
-    elif array_production[i][1] == "false":
+    elif array_production[i][1] == "False":
         array_production[i][1] = "f"
-    elif array_production[i][1] == "constant":
+    elif array_production[i][1] == "konstan":
         array_production[i][1] = "con"
     elif array_production[i][1] == "arithmeticop":
         array_production[i][1] = "a"
@@ -207,9 +207,9 @@ for i in range(production_quantity):
     elif array_production[i][1] == "with":
         array_production[i][1] = "wi"
     
-    if array_production[i][2] == "newline":
+    if array_production[i][2] == "barisbaru":
         array_production[i][2] = "n"
-    elif array_production[i][2] == "variable":
+    elif array_production[i][2] == "variabel":
         array_production[i][2] = "v"
     elif array_production[i][2] == "equal":
         array_production[i][2] = "e"
@@ -217,9 +217,9 @@ for i in range(production_quantity):
         array_production[i][2] = "i"
     elif array_production[i][2] == "return":
         array_production[i][2] = "r"
-    elif array_production[i][2] == "openparentheses":
+    elif array_production[i][2] == "kurungbuka":
         array_production[i][2] = "o"
-    elif array_production[i][2] == "closeparentheses":
+    elif array_production[i][2] == "kurungtutup":
         array_production[i][2] = "c"
     elif array_production[i][2] == "colon":
         array_production[i][2] = "co"
@@ -227,11 +227,11 @@ for i in range(production_quantity):
         array_production[i][2] = "e"
     elif array_production[i][2] == "else":
         array_production[i][2] = "el"
-    elif array_production[i][2] == "true":
+    elif array_production[i][2] == "True":
         array_production[i][2] = "t"
-    elif array_production[i][2] == "false":
+    elif array_production[i][2] == "False":
         array_production[i][2] = "f"
-    elif array_production[i][2] == "constant":
+    elif array_production[i][2] == "konstan":
         array_production[i][2] = "con"
     elif array_production[i][2] == "arithmeticop":
         array_production[i][2] = "a"
