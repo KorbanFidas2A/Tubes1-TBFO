@@ -2,6 +2,38 @@ import cyk
 import cfg_to_cnf
 import tokenizer
 
+variabel = []
+array_cfg = []
+
+#mengubah CFG menjadi array
+array_cfg = cfg_to_cnf.baca_grammar()
+
+#Memisahkan array di sebelah kiri dan kanan
+prod_res = []
+terminal = []
+cfg_to_cnf.pecah_array(array_cfg, variabel, prod_res, terminal)
+
+#menambahkan Sn -> S
+if (not 'Sn' in variabel):
+    variabel.append('Sn')
+    prod_res = [('Sn', [variabel[0]])] + prod_res
+
+dict = {}
+add_terminal(dict, prod_res, variabel, terminal)
+
+#mengganti terminal menjadi variabel
+prod_res2 = []
+prod_res = cfg_to_cnf.change_var(prod_res, prod_res2, variabel, terminal, dict)
+
+#untuk mengeliminasi variabel menjadi 2 variabel, maksimum
+prod_res2 = []
+prod_res = cfg_to_cnf.eliminate_two_var(prod_res, prod_res2, variabel)
+
+#melakukan unit production elimination
+prod_res = cfg_to_cnf.unit_production_elim(prod_res, variabel)
+
+#menulis hasil terjemahan CFG ke CNF dalam txt
+cfg_to_cnf.write_to_cnf(prod_res)
 
 # Membaca kode python lalu mengubahnya menjadi token
 token = tokenizer.tokenize("test_code.txt")
