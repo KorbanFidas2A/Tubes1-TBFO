@@ -82,7 +82,7 @@ with open("cnf.txt", "r") as cnf_file:
 
 for i in range(production_quantity):
     if array_production[i][0] == "barisbaru":
-        array_production[i][0] = "n"
+        array_production[i][0] = "b"
     elif array_production[i][0] == "variabel":
         array_production[i][0] = "v"
     elif array_production[i][0] == "equal":
@@ -92,9 +92,9 @@ for i in range(production_quantity):
     elif array_production[i][0] == "return":
         array_production[i][0] = "r"
     elif array_production[i][0] == "kurungbuka":
-        array_production[i][0] = "o"
+        array_production[i][0] = "kb"
     elif array_production[i][0] == "kurungtutup":
-        array_production[i][0] = "c"
+        array_production[i][0] = "kt"
     elif array_production[i][0] == "colon":
         array_production[i][0] = "co"
     elif array_production[i][0] == "elif":
@@ -145,7 +145,7 @@ for i in range(production_quantity):
         array_production[i][0] = "wi"
            
     if array_production[i][1] == "barisbaru":
-        array_production[i][1] = "n"
+        array_production[i][1] = "b"
     elif array_production[i][1] == "variabel":
         array_production[i][1] = "v"
     elif array_production[i][1] == "equal":
@@ -155,9 +155,9 @@ for i in range(production_quantity):
     elif array_production[i][1] == "return":
         array_production[i][1] = "r"
     elif array_production[i][1] == "kurungbuka":
-        array_production[i][1] = "o"
+        array_production[i][1] = "kb"
     elif array_production[i][1] == "kurungtutup":
-        array_production[i][1] = "c"
+        array_production[i][1] = "kt"
     elif array_production[i][1] == "colon":
         array_production[i][1] = "co"
     elif array_production[i][1] == "elif":
@@ -208,7 +208,7 @@ for i in range(production_quantity):
         array_production[i][1] = "wi"
     
     if array_production[i][2] == "barisbaru":
-        array_production[i][2] = "n"
+        array_production[i][2] = "b"
     elif array_production[i][2] == "variabel":
         array_production[i][2] = "v"
     elif array_production[i][2] == "equal":
@@ -218,9 +218,9 @@ for i in range(production_quantity):
     elif array_production[i][2] == "return":
         array_production[i][2] = "r"
     elif array_production[i][2] == "kurungbuka":
-        array_production[i][2] = "o"
+        array_production[i][2] = "kb"
     elif array_production[i][2] == "kurungtutup":
-        array_production[i][2] = "c"
+        array_production[i][2] = "kt"
     elif array_production[i][2] == "colon":
         array_production[i][2] = "co"
     elif array_production[i][2] == "elif":
