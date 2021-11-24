@@ -36,6 +36,7 @@ cfg_to_cnf.write_to_cnf(prod_res)
 # Membaca kode python lalu mengubahnya menjadi token
 token = tokenizer.tokenize("test_code.txt")
 token_quantity = len(token)
+print(token)
 token.insert(0, "")
 
 # Membaca CNF
