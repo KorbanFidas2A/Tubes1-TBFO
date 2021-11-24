@@ -70,6 +70,7 @@ with open("python.txt", "r", encoding="utf8") as py_file:
     # Pisah menjadi per baris
     lines = py_file.read().splitlines()
 
+    # Menambahkan delimiter di setiap akhir line
     for i in range(len(lines)):
         lines[i] += " \x90"
     
@@ -84,9 +85,9 @@ with open("python.txt", "r", encoding="utf8") as py_file:
         for word in line:
             if (out) or (word == "\x90"):
                 continue
-            i = 0      
-            
+            i = 0           
             while (i < len(word)):
+                # Komen
                 if (getString(word, i, i + 2) == "\\\\\\") and not(comment):
                     comment = True
                     i += 3
@@ -95,11 +96,9 @@ with open("python.txt", "r", encoding="utf8") as py_file:
                     comment = False
                     i += 3
                     continue
-
                 if (comment):
                     i += 1
                     continue
-
                 # Operand and Symbols
                 if (getChar(word, i) == "~") and (i < len(word)):
                     token.append("opr_mat")                
@@ -132,10 +131,12 @@ with open("python.txt", "r", encoding="utf8") as py_file:
                     else:
                         valid = False
                         print("Tokenizer failed!")
+                        print("Unclosed '[' in line", idx_line)
                         sys.exit()
                 elif (getChar(word, i) == "]"):
                     valid = False
                     print("Tokenizer failed!")
+                    print("Overtyped ']' found in line", idx_line)
                     sys.exit()
                 elif (getChar(word, i) == "{"):
                     count = 1
@@ -157,10 +158,12 @@ with open("python.txt", "r", encoding="utf8") as py_file:
                     else:
                         valid = False
                         print("Tokenizer failed!")
+                        print("Unclosed '{' found in line", idx_line)
                         sys.exit()
                 elif (getChar(word, i) == "}"):
                     valid = False
                     print("Tokenizer failed!")
+                    print("Overtyped '}' found in line", idx_line)
                     sys.exit()    
                 elif (getString(word, i, i + 1) == "->") and isSymbol(getChar(word, i + 2)):
                     word = nextWord(line, idx_word)
@@ -198,6 +201,7 @@ with open("python.txt", "r", encoding="utf8") as py_file:
                         i += 1
                     if not(valid):
                         print("Tokenizer failed!")
+                        print("Unclosed string found in line", idx_line)
                         sys.exit()
                     else:
                         token.append("kons")                  
@@ -303,6 +307,7 @@ with open("python.txt", "r", encoding="utf8") as py_file:
 
 # Cek kurung
 count_kurung = 0
+idx_line = 1
 token_awal = token[0]
 for i in range(len(token)):
     if (token[i] == "kurung_l"):
@@ -312,13 +317,17 @@ for i in range(len(token)):
     elif (token[i] == "nl"):
         if (count_kurung > 0):
             print("Tokenizer failed!")
+            print("Unclosed '(' found in line", idx_line)
             sys.exit()
         elif (count_kurung < 0):
             print("Tokenizer failed!")
+            print("Overtyped ')' found in line", idx_line)
             sys.exit()
         if (i != 0) and (token[i - 1] != "titik_dua") and ((token_awal == "def") or (token_awal == "if") or (token_awal == "elif") or (token_awal == "else") or (token_awal == "with") or (token_awal == "class") or (token_awal == "for") or (token_awal == "while")):
             print("Tokenizer failed!")
+            print("':' found missing in line", idx_line)
             sys.exit()
+        idx_line += 1
         if (i != len(token) - 1):
             token_awal = token[i + 1]
 
