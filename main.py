@@ -19,7 +19,7 @@ if (not 'Sn' in variabel):
     prod_res = [('Sn', [variabel[0]])] + prod_res
 
 dict = {}
-add_terminal(dict, prod_res, variabel, terminal)
+cfg_to_cnf.add_terminal(dict, prod_res, variabel, terminal)
 
 #mengganti terminal menjadi variabel
 prod_res2 = []
