@@ -56,17 +56,13 @@ def create_new_var():
 #List untuk menyimpan hasil produksi (prod_res)
 #product[0] menyatakan bagian kiri, product[1] menyatakan bagian kanan, [kiri] -> [kanan]
 for product in prod_res:
-    #ini untuk memitigasi adanya yang hanya terminal A -> [terminal]
     if ((product[0] in variabel) and (product[1][0] in terminal) and (len(product[1]) == 1)):
         prod_res2.append(product)
-        #misalnya ada A -> B a
     else:
         for Terminal in terminal:
             i = 0
-            for Term in product[1]: #mengecek di dalam A -> (A,B) product[1] menandakan A,B
-                #mencari apakah terminal terdapat pada bagian kiri sehingga misalnya A -> [terminal][variabel]
+            for Term in product[1]:
                 if ((Terminal == Term) and (not Terminal in dict)):
-                    #apabila ada maka, akan ditambahkan ke dalam dictionary. A -> a sebagai contoh.
                     dict[Terminal] = create_new_var()
                     variabel.append(dict[Terminal])
                     prod_res2.append((dict[Terminal], [Terminal]))
@@ -84,11 +80,9 @@ for product in prod_res:
     if (len(product[1]) <= 2):
         prod_res2.append(product)
     else:
-        #misalnya ada lebih dari 2
         newvar = create_new_var()
         variabel.append(newvar)
         prod_res2.append((product[0],[product[1][0]] + [newvar]))
-        #membuat belakangnya itu jadi suatu variabel
         newvar2 = newvar
         newvar3 = create_new_var()
         for i in range(1, len(product[1]) - 2):
@@ -115,7 +109,7 @@ for i in range(500):
             if ((units[1] == product[0]) and (units[0] != product[0])):
                 prod_res2.append((units[0], product[1]))
     prod_res = prod_res2
-
+print(prod_res)
 #Membuka file cnf sehingga python akan mengetikkan hasil translasi
 file = open('cnf.txt', 'w')
 final = []
