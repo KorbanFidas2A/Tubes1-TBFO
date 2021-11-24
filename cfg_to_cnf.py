@@ -1,6 +1,5 @@
 import sys, itertools
 
-
 def baca_grammar():
     """ 
     Mengubah CFG menjadi array
