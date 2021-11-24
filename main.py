@@ -14,9 +14,7 @@ terminal = []
 cfg_to_cnf.pecah_array(array_cfg, variabel, prod_res, terminal)
 
 #menambahkan Sn -> S
-if (not 'Sn' in variabel):
-    variabel.append('Sn')
-    prod_res = [('Sn', [variabel[0]])] + prod_res
+prod_res = cfg_to_cnf.addSn(variabel, prod_res)
 
 dict = {}
 cfg_to_cnf.add_terminal(dict, prod_res, variabel, terminal)
