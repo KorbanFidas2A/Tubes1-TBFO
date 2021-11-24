@@ -89,7 +89,7 @@ def write_to_cnf(hasilprod):
     menulis hasil terjemahan CFG ke CNF dalam txt
 
     """
-    file = open('cnfdummy.txt', 'w')
+    file = open('cnf.txt', 'w')
     final = []
 
     hasilprod = sorted(hasilprod)
