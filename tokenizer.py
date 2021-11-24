@@ -198,7 +198,7 @@ def tokenize(python_filename):
                         valid = False
                         print("Tokenizer failed!")
                         print("Overtyped '}' found in line", idx_line)
-                        sys.exit()    
+                        sys.exit()                     
                     elif (getString(word, i, i + 1) == "->") and isSymbol(getChar(word, i + 2)):
                         word = nextWord(line, idx_word)
                         i = 0
@@ -317,21 +317,27 @@ def tokenize(python_filename):
                         while ((getChar(word, i) != "~") and (isLetter(getChar(word, i))) or (isNumber(getChar(word, i))) or (getChar(word, i) == "_")):
                             i += 1
                         i -= 1
-                        if (len(token) > 2) and (token[len(token) - 1] == "titik") and (token[len(token) - 2] == "con") and (token[len(token) - 3] == "con"):
+                        if (len(token) > 2) and (token[len(token) - 1] == "dot") and (token[len(token) - 2] == "con") and (token[len(token) - 3] == "con"):
                             token.pop()
                             token.pop()
                             token.pop()
-                        elif (len(token) > 1) and (token[len(token) - 1] == "titik") and (token[len(token) - 2] == "con"):
+                        elif (len(token) > 1) and (token[len(token) - 1] == "dot") and (token[len(token) - 2] == "con"):
                             token.pop()
                             token.pop()
-                        elif (len(token) > 0) and (token[len(token) - 1] == "titik"):
+                        elif (len(token) > 0) and (token[len(token) - 1] == "dot"):
                             token.pop()
                         else:
                             token.append("v")
                     # Number
                     elif (isNumber(getChar(word, i))):
+                        count_number = 1
                         while (isNumber(getChar(word, i))):
+                            count_number += 1 
                             i += 1
+                            if (isLetter(getChar(word, i)) and (getChar(word, i - count_number) != "\"")): 
+                                print("Tokenizer failed!")
+                                print("Variable unaccepted in line", idx_line)
+                                sys.exit()
                         i -= 1
                         token.append("con")         
                     i += 1                                                                                                   
