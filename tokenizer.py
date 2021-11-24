@@ -1,4 +1,10 @@
-# tokenizer.py
+""" 
+File: tokenizer.py
+
+File berisi fungsi-fungsi yang dibutuhkan untuk mengubah kode python
+menjadi token dalam bentuk array of string.
+"""
+
 import sys
 
 # Inisiasi huruf, angka, dan simbol
@@ -6,36 +12,55 @@ letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 number = "1234567890"
 symbol = "+-*/%{}()[]!#^|~&=,:"
 
+
 def isLetter(x):
-# Mengembalikan 1 jika x merupakan letter
+    """ 
+    Fungsi mengembalikan True jika x merupakan huruf.
+    """
     if x in letter:
         return True
     else:
         return False
 
+
 def isNumber(x):
-# Mengembalikan 1 jika x merupakan number
+    """ 
+    Fungsi mengembalikan True jika x merupakan angka.
+    """
+    
     if x in number:
         return True
     else:
         return False
 
+
 def isSymbol(x):
-# Mengembalikan 1 jika x merupakan symbol
+    """ 
+    Fungsi mengembalikan True jika x merupakan simbol.
+    """
+    
     if x in symbol:
         return True
     else:
         return False
 
+
 def getChar(str, idx):
-# Mengembalikan char index tertentu dalam sebuah string
+    """ 
+    Fungsi mengembalikan char index tertentu dalam sebuah string.
+    """
+
     if (idx < len(str)):
         return str[idx]
     else:
         return "~"
 
+
 def getString(str, idx_x, idx_y):
-# Mengembalikan substring dalam rentang index tertentu dalam string
+    """ 
+    Fungsi mengembalikan substring dalam dalam rentang index tertentu dalam string.
+    """
+    
     subStr = ""
     for i in range(idx_x, idx_y + 1):
         if (i < len(str)):
@@ -44,8 +69,12 @@ def getString(str, idx_x, idx_y):
             return "~"
     return subStr
 
+
 def nextWord(line, idx_word):
-# Mengembalikan word selanjutnya dalam sebuah line of words
+    """ 
+    Fungsi mengembalikan kata selanjutnya dalam sebuah line of words.
+    """
+    
     idx_nextWord = 0
     for word in line:
         if (idx_nextWord == idx_word + 1):
@@ -53,11 +82,17 @@ def nextWord(line, idx_word):
         idx_nextWord += 1
 
 
-def tokenize(filename):
-    # Inisiasi output file tokenized.txt kosong
-    f = open(filename, "w+")
-    f.write("")
-
+def tokenize(python_filename):
+    """ 
+    Fungsi mengembalikan array of string berisi token dari 
+    kode python yang dimasukkan nama filenya pada parameter.
+    
+    Contoh:
+    print("hello world")
+    diubah menjadi token menjadi
+    ['v', 'o', 'v', 'v', 'c', 'n']    
+    """
+    
     # Inisiasi awal
     token = []
     idx_line = 0
@@ -65,7 +100,7 @@ def tokenize(filename):
     comment = False
 
     # Proses
-    with open("python.txt", "r", encoding="utf8") as py_file:
+    with open(python_filename, "r", encoding="utf8") as py_file:
         # Pisah menjadi per baris
         lines = py_file.read().splitlines()
 
@@ -333,7 +368,4 @@ def tokenize(filename):
     # Final check
     if (valid):
         print("Tokenizer succeed!")
-        for i in range(len(token)):
-            f.write(token[i])
-            f.write(" ")
-        f.close()
+        return token
