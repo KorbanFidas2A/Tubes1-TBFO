@@ -12,6 +12,15 @@ def baca_grammar():
         bacagrammar[i] = bacagrammar[i].replace('\n', '')
     return bacagrammar
 
+def add_terminal(dictionary, hasilprod, var, terms):
+    """
+    Membuat hash table untuk mengakses terminal menggunakan dictionary
+    
+    """
+    for product in hasilprod:
+        if ((product[0] in var) and (product[1][0] in terms) and (len(product[1]) == 1)):
+            dictionary[product[1][0]] = product[0]
+
 
 def pecah_array(bacagrammar, var, hasilprod, terms):
     """
@@ -33,14 +42,35 @@ def pecah_array(bacagrammar, var, hasilprod, terms):
                         terms.append(term)
             hasilprod.append((left_side, Terms))
 
-def add_terminal(dictionary, hasilprod, var, terms):
+def unit_production_elim(hasilprod, var):
     """
-    Membuat hash table untuk mengakses terminal menggunakan dictionary
-    
+    melakukan unit production elimination
+
     """
-    for product in hasilprod:
-        if ((product[0] in var) and (product[1][0] in terms) and (len(product[1]) == 1)):
-            dictionary[product[1][0]] = product[0]
+    for i in range(500): 
+        prod_res2 = []
+        elim_unit = []
+        for product in hasilprod:
+            if ((product[0] in var) and (product[1][0] in var) and (len(product[1]) == 1)):
+                elim_unit.append((product[0], product[1][0]))
+            else:
+                prod_res2.append(product)
+        for units in elim_unit:
+            for product in hasilprod:
+                if ((units[1] == product[0]) and (units[0] != product[0])):
+                    prod_res2.append((units[0], product[1]))
+        hasilprod = prod_res2
+    return hasilprod
+
+def addSn(var, hasilprod):
+    """
+    menambahkan Sn -> S
+    """
+    if (not 'Sn' in var):
+        var.append('Sn')
+        hasilprod = [('Sn', [var[0]])] + hasilprod
+    return hasilprod
+
 
 def create_new_var(var2):
     """
@@ -54,6 +84,49 @@ def create_new_var(var2):
         i = i + 1
         variabel_baru = var.upper() + str(i)
     return variabel_baru
+
+
+def write_to_cnf(hasilprod):
+    """
+    menulis hasil terjemahan CFG ke CNF dalam txt
+
+    """
+    file = open('cnfdummy.txt', 'w')
+    final = []
+
+    hasilprod = sorted(hasilprod)
+    for product in hasilprod:
+        if (product[0] == 'Sn'):
+            if (product[0] in final):
+                if (len(product[1]) == 1):
+                    file.write(' | ' + product[1][0])
+                else:
+                    file.write(' | ' + product[1][0] + ' ' + product[1][1])
+            else:
+                if (product == 'Sn'):
+                    file.write('\n')
+                final.append(product[0])
+                file.write(product[0] + ' -> ')
+                if (len(product[1]) == 1):
+                    file.write(product[1][0])
+                else:
+                    file.write(product[1][0] + ' ' + product[1][1])
+    for product in hasilprod:
+        if (product[0] != 'Sn'):
+            if (product[0] in final):
+                if (len(product[1]) == 1):
+                    file.write(' | ' + product[1][0])
+                else:
+                    file.write(' | ' + product[1][0] + ' ' + product[1][1])
+            else:
+                if (product != 'Sn'):
+                    file.write('\n')
+                final.append(product[0])
+                file.write(product[0] + ' -> ')
+                if (len(product[1]) == 1):
+                    file.write(product[1][0])
+                else:
+                    file.write(product[1][0] + ' ' + product[1][1])
 
 def change_var(hasilprod, newprod, var, term, dictionary):
     """
@@ -100,69 +173,9 @@ def eliminate_two_var(hasilprod, newprod, var):
             newprod.append((newvar2, product[1][len(product[1])-2:len(product[1])]))
     return newprod
 
-def unit_production_elim(hasilprod, var):
-    """
-    melakukan unit production elimination
-
-    """
-    for i in range(500): 
-        prod_res2 = []
-        elim_unit = []
-        for product in hasilprod:
-            if ((product[0] in var) and (product[1][0] in var) and (len(product[1]) == 1)):
-                elim_unit.append((product[0], product[1][0]))
-            else:
-                prod_res2.append(product)
-        for units in elim_unit:
-            for product in hasilprod:
-                if ((units[1] == product[0]) and (units[0] != product[0])):
-                    prod_res2.append((units[0], product[1]))
-        hasilprod = prod_res2
-    return hasilprod
-
-def write_to_cnf(hasilprod):
-    """
-    menulis hasil terjemahan CFG ke CNF dalam txt
-
-    """
-    file = open('cnf.txt', 'w')
-    final = []
-
-    hasilprod = sorted(hasilprod)
-    for product in hasilprod:
-        if (product[0] == 'Sn'):
-            if (product[0] in final):
-                if (len(product[1]) == 1):
-                    file.write(' | ' + product[1][0])
-                else:
-                    file.write(' | ' + product[1][0] + ' ' + product[1][1])
-            else:
-                if (product == 'Sn'):
-                    file.write('\n')
-                final.append(product[0])
-                file.write(product[0] + ' -> ')
-                if (len(product[1]) == 1):
-                    file.write(product[1][0])
-                else:
-                    file.write(product[1][0] + ' ' + product[1][1])
-    for product in hasilprod:
-        if (product[0] != 'Sn'):
-            if (product[0] in final):
-                if (len(product[1]) == 1):
-                    file.write(' | ' + product[1][0])
-                else:
-                    file.write(' | ' + product[1][0] + ' ' + product[1][1])
-            else:
-                if (product != 'Sn'):
-                    file.write('\n')
-                final.append(product[0])
-                file.write(product[0] + ' -> ')
-                if (len(product[1]) == 1):
-                    file.write(product[1][0])
-                else:
-                    file.write(product[1][0] + ' ' + product[1][1])
 
 #MAIN PROGRAM
+
 
 variabel = []
 array_cfg = []
@@ -176,9 +189,7 @@ terminal = []
 pecah_array(array_cfg, variabel, prod_res, terminal)
 
 #menambahkan Sn -> S
-if (not 'Sn' in variabel):
-    variabel.append('Sn')
-    prod_res = [('Sn', [variabel[0]])] + prod_res
+prod_res = addSn(variabel, prod_res)
 
 dict = {}
 add_terminal(dict, prod_res, variabel, terminal)
