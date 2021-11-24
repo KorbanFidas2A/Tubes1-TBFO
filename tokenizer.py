@@ -101,16 +101,16 @@ with open("python.txt", "r", encoding="utf8") as py_file:
                     continue
                 # Operand and Symbols
                 if (getChar(word, i) == "~") and (i < len(word)):
-                    token.append("opr_mat")                
+                    token.append("a")                
                 if (getChar(word, i) == "#"):
                     out = True
                     break
                 elif (getChar(word, i) == "("):
-                    token.append("kurung_l")
+                    token.append("o")
                 elif (getChar(word, i) == ")"):
-                    token.append("kurung_r")
+                    token.append("c")
                 elif (getChar(word, i) == "."):
-                    token.append("titik")
+                    token.append("dot")
                 elif (getChar(word, i) == "["):
                     count = 1
                     while (i < len(word)) and (count > 0) and (valid):
@@ -127,7 +127,7 @@ with open("python.txt", "r", encoding="utf8") as py_file:
                             count -= 1
                         i += 1
                     if (i < len(word)) and (count == 0):
-                        token.append("kons")
+                        token.append("con")
                     else:
                         valid = False
                         print("Tokenizer failed!")
@@ -154,7 +154,7 @@ with open("python.txt", "r", encoding="utf8") as py_file:
                             count -= 1
                         i += 1
                     if (i < len(word)) and (count == 0):
-                        token.append("kons")
+                        token.append("con")
                     else:
                         valid = False
                         print("Tokenizer failed!")
@@ -172,20 +172,20 @@ with open("python.txt", "r", encoding="utf8") as py_file:
                         i += 1
                     i -= 1
                 elif (getChar(word, i) == "<") or (getChar(word, i) == ">"):
-                    token.append("opr_log")
+                    token.append("l")
                 elif ((getChar(word, i) == "=") and (getChar(word, i + 1) == "=")) or ((getChar(word, i) == "<") and (getChar(word, i + 1) == "=")) or ((getChar(word, i) == ">") and (getChar(word, i + 1) == "=")) or ((getChar(word, i) == "!") and (getChar(word, i + 1) == "=")):                
-                    token.append("opr_log")
+                    token.append("l")
                     i += 1
                 elif (getChar(word, i) == ":"):
-                    token.append("titik_dua")
+                    token.append("co")
                 elif (getChar(word, i) == ","):
-                    token.append("koma")
+                    token.append("com")
                 elif (getChar(word, i) == "="):
-                    token.append("sama")
+                    token.append("e")
                 elif (getChar(word, i) == "/") or (getChar(word, i) == "*") or (getChar(word, i) == "+") or (getChar(word, i) == "-") or (getChar(word, i) == "%") or (getChar(word, i) == "|") or (getChar(word, i) == "&"):
-                    token.append("opr_mat")
+                    token.append("a")
                 elif ((getChar(word, i) == "/") and (getChar(word, i + 1) == "/")) or ((getChar(word, i) == "*") and (getChar(word, i + 1) == "*")):
-                    token.append("opr_mat")
+                    token.append("a")
                     i += 1
                 elif (getChar(word, i) == "\\"):
                     while (i < len(word)) and (valid):
@@ -204,58 +204,58 @@ with open("python.txt", "r", encoding="utf8") as py_file:
                         print("Unclosed string found in line", idx_line)
                         sys.exit()
                     else:
-                        token.append("kons")                  
+                        token.append("con")                  
                 # Keywords
                 elif (getString(word, i, i + 4) == "False") and (isSymbol(getChar(word, i + 5))):
-                    token.append("false")
+                    token.append("f")
                     i += 4
                 elif (getString(word, i, i + 3) == "True") and (isSymbol(getChar(word, i + 4))):
-                    token.append("true")
+                    token.append("t")
                     i += 3
                 elif (getString(word, i, i + 3) == "None") and (isSymbol(getChar(word, i + 4))):
-                    token.append("kons")
+                    token.append("con")
                     i += 3
                 elif (getString(word, i, i + 2) == "and") and (isSymbol(getChar(word, i + 3))):
-                    token.append("and")
+                    token.append("an")
                     i += 2
                 elif (getString(word, i, i + 1) == "as") and (isSymbol(getChar(word, i + 2))):
                     token.append("as")
                     i += 1
                 elif (getString(word, i, i + 4) == "break") and (isSymbol(getChar(word, i + 5))):
-                    token.append("var")
+                    token.append("v")
                     i += 4          
                 elif (getString(word, i, i + 4) == "class") and (isSymbol(getChar(word, i + 5))):
-                    token.append("class")
+                    token.append("cl")
                     i += 4             
                 elif (getString(word, i, i + 7) == "continue") and (isSymbol(getChar(word, i + 8))):
-                    token.append("var")
+                    token.append("v")
                     i += 7
                 elif (getString(word, i, i + 2) == "def") and (isSymbol(getChar(word, i + 3))):
-                    token.append("def")
+                    token.append("d")
                     i += 2                                                                                                                     
                 elif (getString(word, i, i + 3) == "elif") and (isSymbol(getChar(word, i + 4))):
-                    token.append("elif")
+                    token.append("e")
                     i += 3
                 elif (getString(word, i, i + 3) == "else") and (isSymbol(getChar(word, i + 4))):
-                    token.append("else")
+                    token.append("el")
                     i += 3
                 elif (getString(word, i, i + 2) == "for") and (isSymbol(getChar(word, i + 3))):
-                    token.append("for")
+                    token.append("fo")
                     i += 2     
                 elif (getString(word, i, i + 3) == "from") and (isSymbol(getChar(word, i + 4))):
-                    token.append("from")
+                    token.append("fr")
                     i += 3                                                       
                 elif (getString(word, i, i + 1) == "if") and (isSymbol(getChar(word, i + 2))):
-                    token.append("if")
+                    token.append("i")
                     i += 1
                 elif (getString(word, i, i + 5) == "import") and (isSymbol(getChar(word, i + 6))):
-                    token.append("import")
+                    token.append("im")
                     i += 5                    
                 elif (getString(word, i, i + 1) == "in") and (isSymbol(getChar(word, i + 2))):
                     token.append("in")
                     i += 1
                 elif (getString(word, i, i + 1) == "is") and (isSymbol(getChar(word, i + 2))):
-                    token.append("opr_log")
+                    token.append("l")
                     i += 1           
                 elif (getString(word, i, i + 2) == "not") and (isSymbol(getChar(word, i + 3))):
                     token.append("not")
@@ -264,57 +264,57 @@ with open("python.txt", "r", encoding="utf8") as py_file:
                     token.append("or")
                     i += 1  
                 elif (getString(word, i, i + 3) == "pass") and (isSymbol(getChar(word, i + 4))):
-                    token.append("pass")
+                    token.append("p")
                     i += 3         
                 elif (getString(word, i, i + 4) == "raise") and (isSymbol(getChar(word, i + 5))):
-                    token.append("raise")
+                    token.append("rai")
                     i += 4   
                 elif (getString(word, i, i + 5) == "return") and (isSymbol(getChar(word, i + 6))):
-                    token.append("ret")
+                    token.append("r")
                     i += 5  
                 elif (getString(word, i, i + 4) == "while") and (isSymbol(getChar(word, i + 5))):
-                    token.append("while")
+                    token.append("w")
                     i += 4   
                 elif (getString(word, i, i + 3) == "with") and (isSymbol(getChar(word, i + 4))):
-                    token.append("with")
+                    token.append("wi")
                     i += 3  
                 # Letter
                 elif (isLetter(getChar(word, i))):
                     while ((getChar(word, i) != "~") and (isLetter(getChar(word, i))) or (isNumber(getChar(word, i))) or (getChar(word, i) == "_")):
                         i += 1
                     i -= 1
-                    if (len(token) > 2) and (token[len(token) - 1] == "titik") and (token[len(token) - 2] == "kons") and (token[len(token) - 3] == "kons"):
+                    if (len(token) > 2) and (token[len(token) - 1] == "titik") and (token[len(token) - 2] == "con") and (token[len(token) - 3] == "con"):
                         token.pop()
                         token.pop()
                         token.pop()
-                    elif (len(token) > 1) and (token[len(token) - 1] == "titik") and (token[len(token) - 2] == "kons"):
+                    elif (len(token) > 1) and (token[len(token) - 1] == "titik") and (token[len(token) - 2] == "con"):
                         token.pop()
                         token.pop()
                     elif (len(token) > 0) and (token[len(token) - 1] == "titik"):
                         token.pop()
                     else:
-                        token.append("var")
+                        token.append("v")
                 # Number
                 elif (isNumber(getChar(word, i))):
                     while (isNumber(getChar(word, i))):
                         i += 1
                     i -= 1
-                    token.append("kons")         
+                    token.append("con")         
                 i += 1                                                                                                   
             idx_word += 1
             
-        token.append("nl")
+        token.append("n")
 
 # Cek kurung
 count_kurung = 0
 idx_line = 1
 token_awal = token[0]
 for i in range(len(token)):
-    if (token[i] == "kurung_l"):
+    if (token[i] == "o"):
         count_kurung += 1
-    elif (token[i] == "kurung_r"):
+    elif (token[i] == "c"):
         count_kurung -= 1
-    elif (token[i] == "nl"):
+    elif (token[i] == "n"):
         if (count_kurung > 0):
             print("Tokenizer failed!")
             print("Unclosed '(' found in line", idx_line)
@@ -323,7 +323,7 @@ for i in range(len(token)):
             print("Tokenizer failed!")
             print("Overtyped ')' found in line", idx_line)
             sys.exit()
-        if (i != 0) and (token[i - 1] != "titik_dua") and ((token_awal == "def") or (token_awal == "if") or (token_awal == "elif") or (token_awal == "else") or (token_awal == "with") or (token_awal == "class") or (token_awal == "for") or (token_awal == "while")):
+        if (i != 0) and (token[i - 1] != "co") and ((token_awal == "d") or (token_awal == "i") or (token_awal == "e") or (token_awal == "el") or (token_awal == "wi") or (token_awal == "cl") or (token_awal == "fo") or (token_awal == "w")):
             print("Tokenizer failed!")
             print("':' found missing in line", idx_line)
             sys.exit()
