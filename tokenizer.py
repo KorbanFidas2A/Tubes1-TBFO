@@ -122,11 +122,11 @@ def tokenize(python_filename):
                 i = 0           
                 while (i < len(word)):
                     # Komen
-                    if (getString(word, i, i + 2) == "\\\\\\") and not(comment):
+                    if (getString(word, i, i + 2) == "'''") and not(comment):
                         comment = True
                         i += 3
                         continue
-                    elif (getString(word, i, i + 2) == "\\\\\\") and (comment):
+                    elif (getString(word, i, i + 2) == "'''") and (comment):
                         comment = False
                         i += 3
                         continue
