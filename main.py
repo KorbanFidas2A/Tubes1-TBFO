@@ -5,6 +5,19 @@ import tokenizer
 variabel = []
 array_cfg = []
 
+#tampilan awal
+title = """
+
+   ___       _   _                     ___ _               _              
+  / _ \_   _| |_| |__   ___  _ __     / __\ |__   ___  ___| | _____ _ __  
+ / /_)/ | | | __| '_ \ / _ \| '_ \   / /  | '_ \ / _ \/ __| |/ / _ \ '__| 
+/ ___/| |_| | |_| | | | (_) | | | | / /___| | | |  __/ (__|   <  __/ |    
+\/     \__, |\__|_| |_|\___/|_| |_| \____/|_| |_|\___|\___|_|\_\___|_|    
+       |___/                                                              
+"""
+print(title)
+filename = input("Masukkan nama file: ")
+
 #mengubah CFG menjadi array
 array_cfg = cfg_to_cnf.baca_grammar()
 
@@ -34,7 +47,7 @@ prod_res = cfg_to_cnf.unit_production_elim(prod_res, variabel)
 cfg_to_cnf.write_to_cnf(prod_res)
 
 # Membaca kode python lalu mengubahnya menjadi token
-token = tokenizer.tokenize("test_code.txt")
+token = tokenizer.tokenize(filename)
 token_quantity = len(token)
 token.insert(0, "")
 
