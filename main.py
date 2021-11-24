@@ -37,6 +37,7 @@ cfg_to_cnf.write_to_cnf(prod_res)
 
 # Membaca kode python lalu mengubahnya menjadi token
 token = tokenizer.tokenize("test_code.txt")
+token_quantity = len(token)
 token.insert(0, "")
 
 # Membaca CNF
@@ -45,7 +46,7 @@ variable_array, left_idx_array, right_idx_array = cyk.production_position(produc
 
 # Memproses token dan cnf
 print("Checking...")
-table = cyk.cyk_algorithm(variable_array, production_array, production_quantity, token, len(token), left_idx_array, right_idx_array)
+table = cyk.cyk_algorithm(variable_array, production_array, production_quantity, token, token_quantity, left_idx_array, right_idx_array)
 
 # Pengecekan terakhir kemudian menulis pesan
-cyk.final_check(production_array, production_quantity, len(token), table)
+cyk.final_check(production_array, production_quantity, token_quantity, table)
