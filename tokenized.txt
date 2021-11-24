@@ -1,0 +1,1 @@
+def var kurung_l var kurung_r titik_dua nl var opr_log var var var var nl nl if var opr_log kons titik_dua nl ret kons nl elif var opr_mat kons opr_log kons titik_dua nl if true titik_dua nl ret kons nl else titik_dua nl ret kons nl elif var opr_log kons titik_dua nl ret kons nl else titik_dua nl ret var nl 

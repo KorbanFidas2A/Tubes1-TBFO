@@ -21,7 +21,7 @@ COMMA_VARIABLE -> comma variabel | comma konstan | comma CONTENTS | COMMA_VARIAB
 # Pass Expression
 ALGORITMA -> pass
 #Syntax untuk fungsi dan prosedur
-ALGORITHM -> FUNCTION_EXPRESSION
+ALGORITMA -> FUNCTION_EXPRESSION
 FUNCTION_EXPRESSION -> def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru ALGORITMA return MULTIPLE_VARIABLE | def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru ALGORITMA | def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru return MULTIPLE_VARIABLE | def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru return ALGORITMA | def variabel kurungbuka MULTIPLE_VARIABLE kurungtutup colon barisbaru ALGORITMA return ALGORITMA | def variabel kurungbuka kurungtutup colon barisbaru ALGORITMA return MULTIPLE_VARIABLE | def variabel kurungbuka kurungtutup colon barisbaru ALGORITMA | def variabel kurungbuka kurungtutup colon barisbaru return MULTIPLE_VARIABLE | def variabel kurungbuka kurungtutup colon barisbaru return ALGORITMA | def variabel kurungbuka kurungtutup colon barisbaru ALGORITMA return ALGORITMA
 ALGORITMA -> CALL_FUNCTION
 CALL_FUNCTION -> variabel kurungbuka MULTIPLE_VARIABLE kurungtutup | variabel kurangbuka kurungtutup
@@ -31,7 +31,7 @@ WHILE_EXPRESSION -> while kurungbuka LOGICAL_OPERATION kurungtutup colon barisba
 # Percabangan untuk if else
 ALGORITMA -> IF_EXPRESSION | return MULTIPLE_VARIABLE
 IF_EXPRESSION -> if kurungbuka LOGICAL_OPERATION kurungtutup colon barisbaru ALGORITMA | if LOGICAL_OPERATION colon barisbaru ALGORITMA | IF_EXPRESSION ELIF_EXPRESSION | IF_EXPRESSION ELIF_EXPRESSION ELSE_EXPRESSION | IF_EXPRESSION ELSE_EXPRESSION
-ELIF_EXPRESSION -> ELIF_EXPRESSION ELIF_EXPRESSION | elif kurungbuka LOGICAL_OPERATION kurungtutup colon barisbaru ALGORITMA | elif LOGICAL_OPERATION colon barisbaru ALGORITHM
+ELIF_EXPRESSION -> ELIF_EXPRESSION ELIF_EXPRESSION | elif kurungbuka LOGICAL_OPERATION kurungtutup colon barisbaru ALGORITMA | elif LOGICAL_OPERATION colon barisbaru ALGORITMA
 ELSE_EXPRESSION -> else colon barisbaru ALGORITMA
 # Raise Expression
 ALGORITMA -> RAISE_EXPRESSION

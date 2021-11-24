@@ -1,4 +1,3 @@
-
 from re import A
 import time
 
@@ -26,14 +25,14 @@ def index_of(array, string, length):
 
 
 
-start = time.time();
+start = time.time()
 
 # INISIALISASI SEMUA ARRAY
 # S -> AB
 # A -> 
 # B -> 
 array_production = [["~" for _ in range(3)] for _ in range(1005)]
-v = []
+variabel_array = []
 kiri = [0 for _ in range(300)]
 kanan = [0 for _ in range(300)]
 
@@ -48,7 +47,7 @@ with open("token.txt", "r") as token_file:
         i += 1
         
     token_quantity = i
-
+array_token.insert(0, "")
 print(f"Jumlah token: {token_quantity}")
 
 
@@ -57,7 +56,7 @@ print(f"Jumlah token: {token_quantity}")
 with open("cnf.txt", "r") as cnf_file:
     productions = cnf_file.readlines()
 
-    i = 0
+    i = 1
     for production in productions:
         production = production.split()
         # S -> A B | C
@@ -77,12 +76,11 @@ with open("cnf.txt", "r") as cnf_file:
                     array_production[i][2] = right_side
                 left_variable = False
         i += 1
-    production_quantity = i
+    production_quantity = i - 1
     
-
 for i in range(production_quantity):
     if array_production[i][0] == "barisbaru":
-        array_production[i][0] = "b"
+        array_production[i][0] = "n"
     elif array_production[i][0] == "variabel":
         array_production[i][0] = "v"
     elif array_production[i][0] == "equal":
@@ -92,9 +90,9 @@ for i in range(production_quantity):
     elif array_production[i][0] == "return":
         array_production[i][0] = "r"
     elif array_production[i][0] == "kurungbuka":
-        array_production[i][0] = "kb"
+        array_production[i][0] = "o"
     elif array_production[i][0] == "kurungtutup":
-        array_production[i][0] = "kt"
+        array_production[i][0] = "c"
     elif array_production[i][0] == "colon":
         array_production[i][0] = "co"
     elif array_production[i][0] == "elif":
@@ -145,7 +143,7 @@ for i in range(production_quantity):
         array_production[i][0] = "wi"
            
     if array_production[i][1] == "barisbaru":
-        array_production[i][1] = "b"
+        array_production[i][1] = "n"
     elif array_production[i][1] == "variabel":
         array_production[i][1] = "v"
     elif array_production[i][1] == "equal":
@@ -155,9 +153,9 @@ for i in range(production_quantity):
     elif array_production[i][1] == "return":
         array_production[i][1] = "r"
     elif array_production[i][1] == "kurungbuka":
-        array_production[i][1] = "kb"
+        array_production[i][1] = "o"
     elif array_production[i][1] == "kurungtutup":
-        array_production[i][1] = "kt"
+        array_production[i][1] = "c"
     elif array_production[i][1] == "colon":
         array_production[i][1] = "co"
     elif array_production[i][1] == "elif":
@@ -208,7 +206,7 @@ for i in range(production_quantity):
         array_production[i][1] = "wi"
     
     if array_production[i][2] == "barisbaru":
-        array_production[i][2] = "b"
+        array_production[i][2] = "n"
     elif array_production[i][2] == "variabel":
         array_production[i][2] = "v"
     elif array_production[i][2] == "equal":
@@ -218,9 +216,9 @@ for i in range(production_quantity):
     elif array_production[i][2] == "return":
         array_production[i][2] = "r"
     elif array_production[i][2] == "kurungbuka":
-        array_production[i][2] = "kb"
+        array_production[i][2] = "o"
     elif array_production[i][2] == "kurungtutup":
-        array_production[i][2] = "kt"
+        array_production[i][2] = "c"
     elif array_production[i][2] == "colon":
         array_production[i][2] = "co"
     elif array_production[i][2] == "elif":
@@ -269,8 +267,12 @@ for i in range(production_quantity):
         array_production[i][2] = "rai"
     elif array_production[i][2] == "with":
         array_production[i][2] = "wi"
+head = array_production.pop(0)
 
 array_production = sorted(array_production,key=lambda x: x[0])
+array_production.insert(0, head)
+
+# print(array_production[1])
 # DEBUGGING SORTING ARRAY
 # for i in range(production_quantity):
 #     print(i, array_production[i][0], "->", array_production[i][1], end=" ")
@@ -280,62 +282,41 @@ array_production = sorted(array_production,key=lambda x: x[0])
 #         print()
 
 
-for i in range(production_quantity):
-    if v == []:
-        v.append(array_production[i][0])
+for i in range(1, production_quantity + 1):
+    if variabel_array == []:
+        variabel_array.append(array_production[i][0])
         kiri[0] = 1
         kanan[0] = 1
     elif array_production[i][0] != array_production[i-1][0]:
-        v.append(array_production[i][0])
-        kiri[index_of(v, array_production[i][0], len(v) - 1)] = i
-        kanan[index_of(v, array_production[i][0], len(v) - 1)] = i
+        variabel_array.append(array_production[i][0])
+        kiri[index_of(variabel_array, array_production[i][0], len(variabel_array) - 1)] = i
+        kanan[index_of(variabel_array, array_production[i][0], len(variabel_array) - 1)] = i
     else:
-        kanan[index_of(v, array_production[i][0], len(v) - 1)] = i
-
-array_production = sorted(array_production,key=lambda x: x[0])
-# DEBUGGING SORTING ARRAY
-# for i in range(production_quantity):
-#     print(i, array_production[i][0], "->", array_production[i][1], end=" ")
-#     if (array_production[i][2] != "~"):
-#         print(array_production[i][2])
-#     else:
-#         print()
-
-
-for i in range(production_quantity):
-    if v == []:
-        v.append(array_production[i][0])
-        kiri[0] = 1
-        kanan[0] = 1
-    elif array_production[i][0] != array_production[i-1][0]:
-        v.append(array_production[i][0])
-        kiri[index_of(v, array_production[i][0], len(v) - 1)] = i
-        kanan[index_of(v, array_production[i][0], len(v) - 1)] = i
-    else:
-        kanan[index_of(v, array_production[i][0], len(v) - 1)] = i
-
-# print(v)
+        kanan[index_of(variabel_array, array_production[i][0], len(variabel_array) - 1)] = i
+#print("variabel_array ==== ")
+#print(variabel_array)
 # print("="*100)  
 # print(kiri)
 # print("="*100)
 # print(kanan)
 
 # DEBUGGING
-# for i in range(len(v)):
-#     print(i, v[i], kiri[index_of(v, v[i], len(v) - 1)], kanan[index_of(v, v[i], len(v) - 1)])
+# for i in range(len(variabel_array)):
+#     print(i, variabel_array[i], kiri[index_of(variabel_array, variabel_array[i], len(variabel_array) - 1)], kanan[index_of(variabel_array, variabel_array[i], len(variabel_array) - 1)])
 
 P = [[[False for _ in range(550)] for _ in range(550)] for _ in range(550)]
-print("ap:", array_production[13][1], "token:", array_token[1])
+# print("ap:", array_production[13][1], "token:", array_token[1])
 # INISIALISASI BARIS PERTAMA MENJADI TRUE
 a = 0
-for i in range(token_quantity):
-    for j in range(production_quantity):
+for i in range(1, token_quantity + 1):
+    for j in range(1, production_quantity + 1):
         if array_production[j][1] == array_token[i]:
-            P[0][i][j] = True
+            P[1][i][j] = True
+            # print(i, j)
             a += 1
-            if P[0][1][13] == 1:
-                print(array_production[j][1], array_token[i])
+            # print(array_production[j][1], array_token[i])
 
+"""
 print("setelah diubah")
 for i in range(1):
     for j in range(6):
@@ -343,22 +324,22 @@ for i in range(1):
             print(P[i][j][k], end=" ")
         print()
     print()
- 
+ """
 print(f"masuk {a} kali")
 
 a= 0
-print(P[0][2][230], P[0][3][230], array_production[231][0], array_production[32][1], array_production[230][0], array_production[32][2])
-for i in range(1, token_quantity):
+print(P[1][3][231], P[1][4][231], array_production[231][0], array_production[33][1], array_production[231][0], array_production[33][2])
+for i in range(2, token_quantity + 1):
     print(i, time.time() - start)
-    for j in range(token_quantity - i):
-        for k in range(i):
+    for j in range(1, token_quantity - i + 2):
+        for k in range(1, i):
             # Test combination
-            for l in range(production_quantity):
-                b_location = index_of(v, array_production[l][1], len(v) - 1)
-                print(f"({kiri[b_location]},{kanan[b_location]})", end=" ")
+            for l in range(1, production_quantity + 1):
+                b_location = index_of(variabel_array, array_production[l][1], len(variabel_array) - 1)
+                # print(f"({kiri[b_location]},{kanan[b_location]})", end=" ")
                 for m in range(kiri[b_location], kanan[b_location] + 1):
-                    a += 1
-                    c_location = index_of(v, array_production[l][2], len(v) - 1)
+                    
+                    c_location = index_of(variabel_array, array_production[l][2], len(variabel_array) - 1)
                     for n in range(kiri[c_location], kanan[c_location] + 1):
                         if array_production[m][0] == array_production[l][1] and array_production[n][0] == array_production[l][2]:
                             # if P[k][j][m]:
@@ -366,17 +347,17 @@ for i in range(1, token_quantity):
                             # if P[i-k][j+k + 1][n]:
                             #     print(f"P[{i-k}][{j+k + 1}][{n}] true")
                             
-                            if P[k][j][m] and P[i-k][j+k + 1][n]:
+                            if P[k][j][m] and P[i - k][j + k][n]:
                                 P[i][j][l] = True
-                                print("i:", i, "j:", j, "k:" , k, "l:", l, "m:", m, "n:",n)
+                                #print("i:", i, "j:", j, "k:" , k, "l:", l, "m:", m, "n:",n)
+                                #a += 1
 
-print(f"masuk m: {a}")
+print(f"masuk : {a}")
 
 is_acc = False
-i = 0
-while i < production_quantity and not is_acc:
-    b = i
-    if array_production[i][0] == "S0" and P[token_quantity - 1][1][b]:
+i = 1
+while i <= production_quantity and not is_acc:
+    if array_production[i][0] == "Sn" and P[token_quantity][1][i]:
         is_acc = True
     else:
         i += 1
