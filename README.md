@@ -1,4 +1,4 @@
-# Tugas Besar IF2121 Logika Komputasional
+# Tugas Besar IF2124 Teori Bahasa Formal dan Otomata
 > Sebuah compiler sederhana untuk bahasa pemrograman Python
 
 ## Daftar Isi
